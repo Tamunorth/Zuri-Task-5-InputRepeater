@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'package:url_launcher/url_launcher.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -10,6 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -31,33 +34,25 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: MediaQuery.of(context).size.width <= 1200
           ? AppBar(
               centerTitle: true,
               title: Text('Input Repeater'),
             )
           : null,
-      body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: 20.0),
+      body: Padding(
+        padding: const EdgeInsets.only(left: 15.0, right: 15.0, top: 30.0),
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Expanded(flex: 3, child: Image.asset('assets/images/hng.png')),
-                SizedBox(width: 10.0),
-                Expanded(child: Image.asset('assets/images/zuri.png')),
-              ],
-            ),
-            SizedBox(height: 15.0),
-            Image.asset('assets/images/i4g.png'),
-            SizedBox(height: 15.0),
             Container(
-                color: Theme.of(context).primaryColor,
+                margin: EdgeInsets.all(30.0),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text(_input),
+                  child: Text(
+                    _input,
+                    style: TextStyle(fontSize: 16.0),
+                  ),
                 )),
             Padding(
               padding: EdgeInsets.symmetric(vertical: 20.0),
@@ -77,9 +72,54 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Expanded(
+                    child: LogoLink(
+                        logoURL: 'https://hng.tech',
+                        imageURL: 'assets/images/hng.jpg')),
+                SizedBox(width: 10.0),
+                Expanded(
+                    child: LogoLink(
+                        logoURL: 'https://internship.zuri.team',
+                        imageURL: 'assets/images/zuri.jpg')),
+                SizedBox(width: 10.0),
+                Expanded(
+                    child: LogoLink(
+                        logoURL: 'https://ingressive.org',
+                        imageURL: 'assets/images/i4g.jpg')),
+              ],
+            ),
+            SizedBox(height: 15.0),
           ],
         ),
       ),
     );
   }
+}
+
+class LogoLink extends StatelessWidget {
+  const LogoLink({
+    Key key,
+    @required this.logoURL,
+    @required this.imageURL,
+  }) : super(key: key);
+  final logoURL;
+  final imageURL;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        _launchURL();
+      },
+      child: Image.asset(imageURL),
+    );
+  }
+
+  void _launchURL() async => await canLaunch(logoURL)
+      ? await launch(logoURL)
+      : throw 'Could not launch $logoURL';
 }
