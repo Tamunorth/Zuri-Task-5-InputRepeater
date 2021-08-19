@@ -1,6 +1,6 @@
 # user_input_app
 
-A new Flutter application.
+An application that displays the users input as it is entered.
 
 ## Getting Started
 
