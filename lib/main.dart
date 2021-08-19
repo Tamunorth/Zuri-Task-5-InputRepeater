@@ -34,7 +34,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       appBar: MediaQuery.of(context).size.width <= 1200
           ? AppBar(
               centerTitle: true,
@@ -43,57 +42,60 @@ class _HomePageState extends State<HomePage> {
           : null,
       body: Padding(
         padding: const EdgeInsets.only(left: 15.0, right: 15.0, top: 30.0),
-        child: Column(
-          children: [
-            Container(
-                margin: EdgeInsets.all(30.0),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    _input,
-                    style: TextStyle(fontSize: 16.0),
-                  ),
-                )),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 20.0),
-              child: TextField(
-                onChanged: (value) {
-                  setState(() {
-                    _input = value;
-                  });
-                },
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Theme.of(context).primaryColor,
-                      width: 1.0,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                  margin: EdgeInsets.all(30.0),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      _input,
+                      style: TextStyle(fontSize: 16.0),
+                    ),
+                  )),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 20.0),
+                child: TextField(
+                  onChanged: (value) {
+                    setState(() {
+                      _input = value;
+                    });
+                  },
+                  decoration: InputDecoration(
+                    hintText: 'Enter text',
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Theme.of(context).primaryColor,
+                        width: 1.0,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Expanded(
-                    child: LogoLink(
-                        logoURL: 'https://hng.tech',
-                        imageURL: 'assets/images/hng.jpg')),
-                SizedBox(width: 10.0),
-                Expanded(
-                    child: LogoLink(
-                        logoURL: 'https://internship.zuri.team',
-                        imageURL: 'assets/images/zuri.jpg')),
-                SizedBox(width: 10.0),
-                Expanded(
-                    child: LogoLink(
-                        logoURL: 'https://ingressive.org',
-                        imageURL: 'assets/images/i4g.jpg')),
-              ],
-            ),
-            SizedBox(height: 15.0),
-          ],
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Expanded(
+                      child: LogoLink(
+                          logoURL: 'https://hng.tech',
+                          imageURL: 'images/hng.jpg')),
+                  SizedBox(width: 10.0),
+                  Expanded(
+                      child: LogoLink(
+                          logoURL: 'https://internship.zuri.team',
+                          imageURL: 'images/zuri.jpg')),
+                  SizedBox(width: 10.0),
+                  Expanded(
+                      child: LogoLink(
+                          logoURL: 'https://ingressive.org',
+                          imageURL: 'images/i4g.jpg')),
+                ],
+              ),
+              SizedBox(height: 15.0),
+            ],
+          ),
         ),
       ),
     );
